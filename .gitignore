@@ -9,3 +9,14 @@ pom.xml.asc
 /.nrepl-port
 .hgignore
 .hg/
+/dev-resources
+.lein-deps-sum
+.lein-failures
+.lein-plugins
+.lein-repl-history
+.nrepl-port
+.#*
+.DS_Store
+.nrepl-port
+\#*
+*\#

@@ -1,14 +1,16 @@
 # one.love
 
-rethinkdb wrapped with funk
+[![Build Status](https://travis-ci.org/zcaudate/one.love.png?branch=master)](https://travis-ci.org/zcaudate/one.love)
+
+rethinkdb wrapped in funk
+
+![](https://raw.githubusercontent.com/zcaudate/one.love/master/bob-marley.jpg)
 
 ## Usage
 
 ```clojure
-(require '[one.love :as bob])
+(require '[one.love :as rethink])
 ```
-
-TBD
 
 ## License
 

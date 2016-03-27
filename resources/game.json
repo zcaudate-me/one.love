@@ -1,0 +1,6 @@
+[
+    {id: 2, player: "Bob", points: 15, type: "ranked"},
+    {id: 5, player: "Alice", points: 7, type: "free"},
+    {id: 11, player: "Bob", points: 10, type: "free"},
+    {id: 12, player: "Alice", points: 2, type: "free"}
+]

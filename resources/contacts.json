@@ -1,0 +1,33 @@
+{
+	"id": 10001,
+	"name": "Bob Smith",
+	"contact": {
+		"phone": {
+			"work": "408-555-1212",
+			"home": "408-555-1213",
+			"cell": "408-555-1214"
+		},
+		"email": {
+			"work": "bob@smith.com",
+			"home": "bobsmith@gmail.com",
+			"other": "bobbys@moosecall.net"
+		},
+		"im": {
+			"skype": "Bob Smith",
+			"aim": "bobmoose",
+			"icq": "nobodyremembersicqnumbers"
+		}
+	},
+	"notes": [
+		{
+			"date": "1234",
+			"from": "John Doe",
+			"subject": "My name is even more boring than Bob's"
+		},
+		{
+            "date": "1234",
+			"from": "Bob Smith Sr",
+			"subject": "Happy Second of February"
+		}
+	]
+}
