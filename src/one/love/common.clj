@@ -3,7 +3,7 @@
   (:import com.rethinkdb.RethinkDB
            com.rethinkdb.gen.ast.Between))
 
-(defonce r RethinkDB/r)
+(def r RethinkDB/r)
 
 (defrecord Rethink []
   Object
@@ -49,8 +49,27 @@
 
         :else (str result)))
 
-(defn merge-opts [^Between r opts]
-  (reduce (fn [out [k v]]
-            (.optArg out (case/camel-case k) v))
-          r
-          opts))
+(defmacro run [[conn db table clj] & body]
+  `(-> RethinkDB/r
+       ~@(if db [`(.db ~db)])
+       ~@(if table [`(.table ~table)])
+       ~@body
+       (.run ~conn)
+       ~@(if (false? clj) [] [`to-clj])))
+
+(defmacro do-> [obj & body]
+  (let [[prev end] [(butlast body) (last body)]]
+    `(-> (doto ~obj
+           ~@prev)
+         ~end)))
+
+(defn merge-opts
+  ([^Between r opts]
+   (merge-opts r opts case/camel-case))
+  ([^Between r opts key-fn]
+   (reduce (fn [out [k v]]
+             (.optArg out (key-fn k) v))
+           r
+           opts)))
+
+

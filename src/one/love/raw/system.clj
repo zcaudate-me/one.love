@@ -1,21 +1,17 @@
 (ns one.love.raw.system
-  (:require [one.love.common :as common]))
+  (:require [one.love.common :as one]))
+
+(def rethink "rethinkdb")
 
 (defn config
   ([conn] #{:table :server :db :cluster})
   ([conn name]
-   (-> common/r
-       (.db "rethinkdb")
-       (.table (str (common/to-string name) "_config"))
-       (.run conn)
-       (->> (mapv common/to-clj))))
+   (let [name (str (one/to-string name) "_config")]
+     (mapv one/to-clj  (one/run [conn rethink name]))))
   ([conn name query update]
-   (-> common/r
-       (.db "rethinkdb")
-       (.table (str (common/to-string name) "_config"))
-       (.update update)
-       (.run conn)
-       (->> (mapv common/to-clj)))))
+   (let [name (str (one/to-string name) "_config")]
+     (one/run [conn rethink name]
+       (.update update)))))
 
 (def status-lookup
   {:table "table_status"
@@ -27,24 +23,12 @@
   ([conn] (-> status-lookup keys set))
   ([conn name]
    (if-let [table (status-lookup (keyword name))]
-     (-> common/r
-         (.db "rethinkdb")
-         (.table table)
-         (.run conn)
-         (->> (mapv common/to-clj))))))
+     (mapv one/to-clj (one/run [conn rethink table])))))
 
 (defn stats
-  ([conn]
-   (-> common/r
-       (.db "rethinkdb")
-       (.table "stats")
-       (.run conn))))
+  [conn]
+  (one/run [conn rethink "stats" false]))
 
 (defn logs
-  ([conn]
-   (-> common/r
-       (.db "rethinkdb")
-       (.table "logs")
-       (.run conn))))
-
-
+  [conn]
+  (one/run [conn rethink "logs" false]))
