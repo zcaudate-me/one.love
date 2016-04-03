@@ -1,6 +1,7 @@
 (ns one.love.raw.command.compile-test
   (:use midje.sweet)
-  (:require [one.love.raw.command.compile :refer :all]))
+  (:require [one.love.raw.command.compile :refer :all]
+            [one.love.raw.connection :as conn]))
 
 (def conn (conn/connect conn/+defaults+))
 

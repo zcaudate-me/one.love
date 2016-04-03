@@ -1,6 +1,8 @@
 (ns one.love
   (:require [one.love.classic :as classic]
-            [one.love.common :as common]))
+            [one.love.common :as common]
+            [one.love.raw.connection :as conn]
+            [one.love.raw.command :as command]))
 
 (comment
   (connect! {:host "localhost"

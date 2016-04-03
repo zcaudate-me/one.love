@@ -7,6 +7,30 @@
   (:import com.rethinkdb.ast.ReqlAst
            [com.rethinkdb.gen.ast Datum MakeArray MakeObj Func Funcall]))
 
+
+(defn ast?
+  [x]
+  (instance? ReqlAst x))
+
+(defn command?
+  "checks to see if the form is a command
+       (command? 1) => false
+       (command? [:insert]) => true"
+  {:added "0.1"} [form]
+  (and (vector? form)
+       (keyword? (first form))))
+
+(defn thread?
+  {:added "0.1"}
+  [form]
+  (and (vector? form)
+       (command? (first form))))
+
+(defn js-function?
+  [form]
+  (and (list? form)
+       (= (first form) 'fn)))
+
 (defn thread
   "threads forms so that it can be converted to ast
        (thread [[:db \"test\"]
@@ -35,32 +59,6 @@
     (if (command? f?)
       (recur f? (cons (apply vector k more) out))
       (vec (cons form out)))))
-
-(defn ast?
-  [x]
-  (instance? ReqlAst x))
-
-(defn command?
-  "checks to see if the form is a command
-       (command? 1) => false
-       (command? [:insert]) => true"
-  {:added "0.1"} [form]
-  (and (vector? form)
-       (keyword? (first form))))
-
-(defn thread?
-  "checks to see if the form is a command
-       (command? 1) => false
-       (command? [:insert]) => true"
-  {:added "0.1"}
-  [form]
-  (and (vector? form)
-       (command? (first form))))
-
-(defn js-function?
-  [form]
-  (and (list? form)
-       (= (first form) 'fn)))
 
 (defn to-ast-args
   "sorts the input vector into arguments and optargs

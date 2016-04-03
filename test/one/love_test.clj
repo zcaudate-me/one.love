@@ -2,7 +2,6 @@
 	(:use midje.sweet)
   (:require [one.love :refer :all]
             [one.love.raw.connection :as conn]
-            [one.love.raw.ast :as ast]
             [one.love.common :as one]))
 
 (def conn (conn/connect conn/+defaults+))

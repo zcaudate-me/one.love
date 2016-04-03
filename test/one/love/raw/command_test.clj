@@ -87,6 +87,12 @@
   (-> (run [conn]
         [[:db "test"]
          [:table "users"]
+         [:filter #(-> % (.getField "name") (= "Chris"))]])
+      seq)
+
+  (-> (run [conn]
+        [[:db "test"]
+         [:table "users"]
          [:filter {:school {:name "Syndal"}}]])
       seq)
 
