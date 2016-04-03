@@ -17,7 +17,13 @@
   [v w]
   (.write w (str v)))
 
-(defn to-clj [result]
+(defn to-clj
+  "converts a rethinkdb result to a clojure datastructure
+       (to-clj (java.util.ArrayList.
+                [(java.util.HashMap. {\"id\" \"hello\" \"newKey\" true})
+                 (java.util.HashMap. {\"id\" \"hello\" \"newKey\" false})]))
+       => [{:new-key true, :id \"hello\"} {:new-key false, :id \"hello\"}]"
+  {:added "0.1"} [result]
   (let [t (type result)]
     (cond (= t java.util.ArrayList)
           (mapv to-clj result)
@@ -29,7 +35,11 @@
                   result)
           :else result)))
 
-(defn from-clj [result]
+(defn from-clj
+  "converts a clojure datastructure into a rethinkdb compatible input:
+       (from-clj {:foo-bar \"baz\"})
+       => {\"fooBar\" \"baz\"}"
+  {:added "0.1"} [result]
   (cond (sequential? result)
         (mapv from-clj result)
 
@@ -40,7 +50,11 @@
                 result)
         :else result))
 
-(defn to-string [result]
+(defn to-string
+  "converts keyword/string to string
+       (to-string :hello) => \"hello\"
+       (to-string \"hello\") => \"hello\""
+  {:added "0.1"} [result]
   (cond (string? result)
         result
 

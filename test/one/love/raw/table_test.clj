@@ -11,10 +11,10 @@
 ^{:refer one.love.raw/list-tables :added "0.1"}
 (fact "lists all tables in a database"
       (one/do-> conn
-        (db/create-db "test")
-        (clear-tables "test")
-        (create-table "test" "love")
-        (create-table "test" "one"))
+                (db/create-db "test")
+                (clear-tables "test")
+                (create-table "test" "love")
+                (create-table "test" "one"))
       (list-tables conn "test")
       => #{"love" "one"})
 

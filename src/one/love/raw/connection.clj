@@ -7,6 +7,16 @@
    :db "test"})
 
 (defn connect
+  "creates a connection to rethinkdb
+       (-> (connect +defaults+)
+           (.isOpen))
+       => true
+ 
+       (-> (doto (connect +defaults+)
+             (.close))
+           (.isOpen))
+       => false"
+  {:added "0.1"}
   [{:keys [host port auth timeout cert ssl db recreate?] :as m}]
   (let [conn (-> common/r
                  (.connection)
