@@ -63,7 +63,7 @@
 
         :else (str result)))
 
-(defmacro run [[conn db table clj] & body]
+(defmacro run* [[conn db table clj] & body]
   `(-> RethinkDB/r
        ~@(if db [`(.db ~db)])
        ~@(if table [`(.table ~table)])

@@ -5,7 +5,7 @@
 
 (defn list-tables [^Connection conn db]
   (let [db (one/to-string db)]
-    (set (one/run [conn db] (.tableList)))))
+    (set (one/run* [conn db] (.tableList)))))
 
 (defn create-table
   "creates a table in a database; if exists, do nothing
@@ -21,7 +21,7 @@
    (let [db (one/to-string db)
          table (one/to-string table)]
      (if-not ((list-tables conn db) table)
-       (one/run [conn db]
+       (one/run* [conn db]
          (.tableCreate table)
          (one/merge-opts opts))
        {:tables-created 0}))))
@@ -40,7 +40,7 @@
   (let [db (one/to-string db)
         table (one/to-string table)]
     (if ((list-tables conn db) table)
-      (one/run [conn db]
+      (one/run* [conn db]
        (.tableDrop table))
       {:tables-dropped 0})))
 
@@ -65,7 +65,7 @@
        (list-tables conn \"test\")
        => #{\"love\"}"
   {:added "0.1"} [^Connection conn db old-table new-table]
-  (one/run [conn db old-table]
+  (one/run* [conn db old-table]
     (.config)
     (.update {"name" new-table})))
 
@@ -86,7 +86,7 @@
             :primary-key \"id\",
             :db \"test\"})"
   {:added "0.1"} [^Connection conn db table]
-  (one/run [conn db table] (.config)))
+  (one/run* [conn db table] (.config)))
 
 (defn reconfigure-table
   "reconfigures table to specified value
@@ -107,6 +107,6 @@
             :primary-key \"id\",
             :db \"test\"})"
   {:added "0.1"} [^Connection conn db table opts]
-  (one/run [conn db table]
+  (one/run* [conn db table]
     (.reconfigure)
     (one/merge-opts opts (comp one/to-string case/snake-case))))

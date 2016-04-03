@@ -11,7 +11,7 @@
          (list-dbs))
        => #{\"love\" \"test\"}"
   {:added "0.1"} [^Connection conn]
-  (-> (one/run [conn] (.dbList)) set (disj "rethinkdb")))
+  (-> (one/run* [conn] (.dbList)) set (disj "rethinkdb")))
 
 (defn create-db
   "creates a db for the connection
@@ -26,7 +26,7 @@
   (let [db (one/to-string db)]
     (if ((list-dbs conn) db)
       {:dbs-created 0}
-      (one/run [conn] (.dbCreate db)))))
+      (one/run* [conn] (.dbCreate db)))))
 
 (defn drop-db
   "drops the db for the connection
@@ -43,7 +43,7 @@
   (let [db (one/to-string db)]
     (if-not ((list-dbs conn) db)
       {:dbs-dropped 0}
-      (one/run [conn] (.dbDrop db)))))
+      (one/run* [conn] (.dbDrop db)))))
 
 (defn clear-dbs
   "clears all the current databases in the connection
@@ -67,7 +67,7 @@
          (list-dbs conn))
        => #{\"love\"}"
   {:added "0.1"} [^Connection conn old-db new-db]
-  (one/run [conn old-db]
+  (one/run* [conn old-db]
     (.config)
     (.update {"name" new-db})))
 
@@ -79,4 +79,4 @@
          (info-db \"test\"))
        => (just {:name \"test\", :id string?})"
   {:added "0.1"} [^Connection conn db]
-  (one/run [conn db] (.config)))
+  (one/run* [conn db] (.config)))

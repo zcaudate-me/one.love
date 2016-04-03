@@ -1,9 +1,8 @@
-(ns one.love.raw.command-test
+(ns one.love.scratch-test
   (:use midje.sweet)
-  (:require [one.love.raw.command :refer :all]
-            [one.love.raw.connection :as conn]
-            [one.love.raw.command.compile :as compile]
-            [one.love.raw.js :as js]
+  (:require [one.love.raw.connection :as conn]
+            [one.love.command :as commmand]
+            [one.love.command.js :as js]
             [one.love.common :as one])
   (:import com.rethinkdb.gen.ast.Funcall
            com.rethinkdb.gen.ast.Javascript))

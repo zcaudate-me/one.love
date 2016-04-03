@@ -1,4 +1,4 @@
-(ns one.love.raw.js
+(ns one.love.command.js
   (:require [clojure.string :as string]
             [clojure.java.io :as io]
             [clojure.walk :as walk]))

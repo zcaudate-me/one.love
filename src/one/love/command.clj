@@ -1,12 +1,11 @@
-(ns one.love.raw.command.compile
-  (:require [one.love.raw.command.func :as func]
-            [one.love.raw.js :as js]
+(ns one.love.command
+  (:require [one.love.command.ast :as ast]
+            [one.love.command.js :as js]
             [clojure.walk :as walk]
             [clojure.string :as string]
             [hara.reflect :as reflect])
   (:import com.rethinkdb.ast.ReqlAst
            [com.rethinkdb.gen.ast Datum MakeArray MakeObj Func Funcall]))
-
 
 (defn ast?
   [x]
@@ -88,7 +87,7 @@
   (cond (command? form)
         (let [[k & args] form
               [args opts] (to-ast-args args)
-              func (or (func/fns k)
+              func (or (ast/fns k)
                        (throw (Exception. (str "Invalid term: " k))))]
           (func (mapv to-ast args) opts))
 
@@ -173,3 +172,9 @@
 (defmethod print-method Datum
   [v w]
   (.write w (str "#datum" (to-data v))))
+
+(defn prepare [commands]
+  (if (command? commands)
+    [commands]
+    commands))
+

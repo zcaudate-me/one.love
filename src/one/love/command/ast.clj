@@ -1,9 +1,8 @@
-(ns one.love.raw.command.func
+(ns one.love.command.ast
   (:require [clojure.string :as string]
             [clojure.java.io :as io]
             [hara.string.case :as case]
-            [clojure.walk :as walk]
-            [hara.reflect :as reflect])
+            [clojure.walk :as walk])
   (:import java.util.jar.JarFile)
   (:refer-clojure :exclude [>]))
 

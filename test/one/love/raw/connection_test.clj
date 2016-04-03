@@ -4,11 +4,12 @@
 
 ^{:refer one.love.raw.connection/connect :added "0.1"}
 (fact "creates a connection to rethinkdb"
-      (-> (connect +defaults+)
-          (.isOpen))
-      => true
+  (-> (connect +defaults+)
+      (.isOpen))
+  => true
 
-      (-> (doto (connect +defaults+)
-            (.close))
-          (.isOpen))
-      => false)
+  (-> (doto (connect +defaults+)
+        (.close))
+      (.isOpen))
+  => false)
+ 

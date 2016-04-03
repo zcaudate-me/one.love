@@ -9,22 +9,20 @@
 (defn connect!
   ([] (connect! {}))
   ([m]
-   (let [{:keys [db
-                 recreate?
-                 install-schema?
-                 install-index] :as m}
-         (merge conn/+defaults+ m)
-
+   (let [{:keys [db options] :as m} (merge conn/+defaults+ m)
+         {:keys [recreate-db
+                 install-schema
+                 install-index]} options
          conn (conn/connect m)
-         _    (if recreate?
+         _    (if recreate-db
                 (db/drop-db conn db))
          _    (db/create-db conn db)]
-     (-> (common/map->Rethink (dissoc m :recreate? :install-schema? :install-index?))
+     (-> (common/map->Rethink m)
          (assoc :conn conn)))))
 
 (defn insert!
-  [{:keys [conn db create-table]} table data opts]
-  (if (and create-table
+  [{:keys [conn db options]} table data opts]
+  (if (and (:create-table options)
            (not ((table/list-tables conn db) table)))
     (table/create-table conn db table opts))
   (-> common/r
