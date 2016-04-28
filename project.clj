@@ -10,7 +10,9 @@
                  [im.chit/hara.reflect "2.2.17"]
                  [im.chit/hara.string.case "2.2.17"]]
   :profiles {:dev {:plugins [[lein-midje "3.1.3"]
-                             [lein-hydrox "0.1.16"]]
+                             ;[lein-hydrox "0.1.16"]
+                             ]
                    :dependencies [[midje "1.6.3"]
-                                  [helpshift/hydrox "0.1.16"]
-                                  [cheshire "5.5.0"]]}})
+                                  ;[helpshift/hydrox "0.1.16"]
+                                  ;[cheshire "5.5.0"]
+                                  ]}})
