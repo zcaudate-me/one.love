@@ -8,8 +8,6 @@
 
 (def conn (connect))
 
-"from `http://www.rethinkdb.com/docs/reql-data-exploration/`"
-
 (fact
   (run conn [:db-drop "test"])
   => (contains {:dbs-dropped 1
@@ -30,17 +28,6 @@
      [:table-create "movies"]])
   => (contains {:tables-created 1,
                 :config-changes vector?})
-  {:old-val nil
-   :new-val {:shards [{:nonvoting-replicas [],
-                       :replicas ["arrakas_uqp"],
-                       :primary-replica "arrakas_uqp"}],
-             :indexes [],
-             :durability "hard",
-             :write-acks "majority",
-             :name "movies",
-             :id "07bdfd51-264a-4adc-abdc-6940b01d1249",
-             :primary-key "id",
-             :db "test"}}
 
   (def results
     (run conn
@@ -66,6 +53,12 @@
      [:distinct]
      [:count]])
   => 250
+  
+
+  (run conn
+    [[:table "movies"]
+     [:without "id"]
+     [:distinct]])
 
   (doto conn
     (run [:table-create "unique_movies"])
