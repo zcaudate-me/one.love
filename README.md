@@ -11,7 +11,7 @@ rethinkdb wrapped in funk
 Add to project.clj dependencies:
 
 ```clojure
-[im.chit/one.love "0.1.0"]
+[im.chit/one.love "0.1.2"]
 ```
 
 ## Usage
@@ -22,7 +22,7 @@ Add to project.clj dependencies:
 
 ## Documentation
 
-TBD 
+TBD
 
 
 ## Walkthrough
@@ -42,7 +42,7 @@ Creating a connection:
 
 #### Creating Data
 
-Akshay Chougule, a biologist working with large data sets, wrote a blog post about [Useful Unix commands for exploring data](http://datavu.blogspot.com/2014/08/useful-unix-commands-for-exploring-data.html), showing ways to “query” comma-delimited plain text data sets with common shell commands. 
+Akshay Chougule, a biologist working with large data sets, wrote a blog post about [Useful Unix commands for exploring data](http://datavu.blogspot.com/2014/08/useful-unix-commands-for-exploring-data.html), showing ways to “query” comma-delimited plain text data sets with common shell commands.
 
 We’ll use data from the IMDb Top 250. (Note that we captured this on August 26, 2014, so the data will likely be different if you check it now.) The plain-text data from IMDb isn’t in any format, but we’ve turned it into a JSON file available at http://rethinkdb.com/sample/top-250-ratings.json. (For the record, we converted it to a tab-delimited file first, used rethinkdb import to get it into a database, fixed the column types and re-exported it. See Importing your data for details.)
 
