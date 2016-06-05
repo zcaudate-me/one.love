@@ -1,4 +1,4 @@
-(defproject im.chit/one.love "0.1.2"
+(defproject im.chit/one.love "0.1.3"
   :description "rethinkdb wrapped in funk"
   :url "https://www.github.com/zcaudate/one.love"
   :license {:name "The MIT License"

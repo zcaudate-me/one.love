@@ -3,7 +3,8 @@
             [clojure.java.io :as io]
             [hara.string.case :as case]
             [clojure.walk :as walk])
-  (:import java.util.jar.JarFile)
+  (:import java.util.jar.JarFile
+           com.rethinkdb.gen.ast.Datum)
   (:refer-clojure :exclude [>]))
 
 (def +rethink-snippet+ #"rethinkdb/rethinkdb-driver")
@@ -30,6 +31,14 @@
                   (into {}))]
     ast))
 
+(defn datumise [m]
+  (reduce-kv (fn [out k v]
+               (let [k (if (keyword? k) (name k) k)
+                     v (if (instance? Datum v) v (Datum. v))]
+                 (assoc out k v)))
+             {}
+             m))
+
 (defmacro create-term-form
   "creates a term form from a class name"
   {:added "0.1"}
@@ -40,7 +49,8 @@
      ([~'args ~'opts]
       (new ~cls
            (com.rethinkdb.model.Arguments. (walk/stringify-keys ~'args))
-           (com.rethinkdb.model.OptArgs/fromMap ~'opts)))))
+           (com.rethinkdb.model.OptArgs/fromMap
+            (datumise ~'opts))))))
 
 (defn create-term-fn
   "create a term function from a class name"

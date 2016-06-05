@@ -3,7 +3,8 @@
             [one.love.command.js :as js]
             [clojure.walk :as walk]
             [clojure.string :as string]
-            [hara.reflect :as reflect])
+            [hara.reflect :as reflect]
+            [hara.string.case :as case])
   (:import com.rethinkdb.ast.ReqlAst
            [com.rethinkdb.gen.ast Datum MakeArray MakeObj Func Funcall]))
 
@@ -115,7 +116,7 @@
   (-> (.getName cls)
       (string/split #"\.")
       last
-      (.toLowerCase)
+      case/spear-case
       keyword))
 
 (declare to-data)

@@ -42,15 +42,19 @@
         (cond-> results
           clj one/to-clj)))
 
+(defn gen-ast [commands]
+  (-> commands
+       command/prepare
+       vec
+       command/thread
+       command/to-ast))
+
 (defn run
   ([rt commands]
    (run rt commands {}))
   ([rt commands opts]
    (-> commands
-       command/prepare
-       vec
-       command/thread
-       command/to-ast
+       gen-ast
        (.run (:conn rt))
        (process-results (-> opts :clj false? not)))))
 
