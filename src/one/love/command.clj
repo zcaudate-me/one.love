@@ -1,6 +1,7 @@
 (ns one.love.command
   (:require [one.love.command.ast :as ast]
             [one.love.command.js :as js]
+            [one.love.command.lambda :as lambda]
             [clojure.walk :as walk]
             [clojure.string :as string]
             [hara.reflect :as reflect]
@@ -30,6 +31,11 @@
   [form]
   (and (list? form)
        (= (first form) 'fn)))
+
+(defn lambda-function?
+  [form]
+  (and (list? form)
+       (vector? (first form))))
 
 (defn thread
   "threads forms so that it can be converted to ast
@@ -101,6 +107,9 @@
         (js-function? form)
         (to-ast [:javascript
                  (str "(" (js/js form) ")")])
+
+        (lambda-function? form)
+        (lambda/compile-lambda form)
 
         :else
         form))
