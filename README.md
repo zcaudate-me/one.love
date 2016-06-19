@@ -11,7 +11,7 @@ rethinkdb wrapped in funk
 Add to project.clj dependencies:
 
 ```clojure
-[im.chit/one.love "0.1.3"]
+[im.chit/one.love "0.1.4"]
 ```
 
 ## Usage

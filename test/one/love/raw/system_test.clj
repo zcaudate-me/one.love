@@ -23,8 +23,7 @@
   => #{:name :id}
 
   (config conn :cluster)
-  => [{:id "auth" :auth-key nil}
-      {:id "heartbeat", :heartbeat-timeout-secs 10}]
+  => (contains [{:id "heartbeat", :heartbeat-timeout-secs 10}])
 
   (-> (config conn :table) first keys set)
   => #{:db :name :write-acks :durability :id :shards :indexes :primary-key})
