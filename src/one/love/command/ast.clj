@@ -7,29 +7,15 @@
            com.rethinkdb.gen.ast.Datum)
   (:refer-clojure :exclude [>]))
 
-(def +rethink-snippet+ #"rethinkdb/rethinkdb-driver")
-(def +java-class-path+ "java.class.path")
-
 (defn rethink-ast
   "reads all ast-classes from the `com.rethinkdb.gen.ast` package"
   {:added "0.1"} []
-  (let [paths   (-> (System/getProperties)
-                    (get +java-class-path+)
-                    (string/split #":"))
-        path (->> paths
-                  (filter (fn [path]
-                            (re-find +rethink-snippet+ path)))
-                  first)
-        jar  (java.util.jar.JarFile. path)
-        ast  (->> (.entries jar)
-                  (iterator-seq)
-                  (map #(.getName %))
-                  (keep #(re-find #"(com/rethinkdb/gen/ast/(\w+)).class" %))
-                  (map (fn [[_ path cls]]
-                         [(-> cls case/spear-case keyword)
-                          (Class/forName (.replaceAll path "/" "."))]))
-                  (into {}))]
-    ast))
+  ;; rethinkdb-ast.edn generated using `lein run -m gen-ast-list/generate`
+  (->> (read-string (slurp (io/resource "rethinkdb-ast.edn")))
+       (map (fn [class-name]
+              [(-> class-name case/spear-case keyword)
+               (Class/forName (str "com.rethinkdb.gen.ast." class-name))]))
+       (into {})))
 
 (defn datumise [m]
   (reduce-kv (fn [out k v]
