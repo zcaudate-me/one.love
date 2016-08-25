@@ -10,6 +10,7 @@
   :profiles {:dev {:plugins [[lein-midje "3.1.3"]
                              ;[lein-hydrox "0.1.16"]
                              ]
+                   :source-paths ["src" "dev"]
                    :dependencies [[midje "1.6.3"]
                                   ;[helpshift/hydrox "0.1.16"]
                                   ;[cheshire "5.5.0"]
